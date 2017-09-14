@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+  - name: Restart squid
+    service:
+      name: squid
+      state: restarted
+
+  - name: Acknowledge alert
+    become: false
+    local_action:
+      module: zabbix_ack
+      server_url: "{{ server_url }}"
+      login_user: "{{ login_user }}"
+      login_password: "{{ login_password }}"
+      eventid: "{{ eventid }}"
+      message: "Remediation attempted via Ansible Playbook  ({{ ansible_date_time.date }}  {{ ansible_date_time.time }})"
+      close_event: False

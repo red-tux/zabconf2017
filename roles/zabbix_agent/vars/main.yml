@@ -1,0 +1,4 @@
+---
+# vars file for zabbix_agent
+required_vars:
+  - zabbix_server_address

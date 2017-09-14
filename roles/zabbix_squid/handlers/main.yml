@@ -1,0 +1,7 @@
+---
+# handlers file for zabbix_squid
+- name: restart zabbix agent
+  service:
+    name: zabbix-agent
+    state: restarted
+

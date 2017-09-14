@@ -1,0 +1,6 @@
+---
+- hosts: templ_Template_Squid
+  become: true
+
+  roles:
+  - zabbix_squid

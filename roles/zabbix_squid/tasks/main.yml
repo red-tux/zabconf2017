@@ -1,0 +1,9 @@
+---
+# tasks file for zabbix_squid
+- name: Push Zabbix agent Squid User Parameters file
+  copy:
+    src: userparameter_squid.conf
+    dest: /etc/zabbix/zabbix_agentd.d/userparameter_squid.conf
+    mode: 0644
+  notify: 
+  - restart zabbix agent

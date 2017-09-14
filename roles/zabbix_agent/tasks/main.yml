@@ -1,0 +1,32 @@
+---
+# tasks file for zabbix_agent
+- name: Checking for Required Variables
+  fail: msg="Variable '{{ item }}' is not defined"
+  when: "{{ item }} is not defined"
+  with_items: "{{ required_vars }}"
+ 
+- name: Install Zabbix Agent RPMs
+  yum:
+    name: zabbix-agent, zabbix-sender
+    state: present
+
+- name: Update Zabbix Agent conf file
+  template:
+    src: zabbix_agent.conf
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: root
+    group: root
+    mode: 0644
+    setype: etc_t
+  notify:
+  - restart zabbix agent
+
+- name: Force handler execution
+  meta: flush_handlers
+
+- name: Start Zabbix Agent
+  service:
+    name: zabbix-agent
+    enabled: true
+    state: started
+
